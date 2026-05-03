@@ -42,8 +42,13 @@ class Config:
     MIN_DEFECTIVE_FRAC = 0.30
     SEED = 42
 
-    # Device
-    DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+    # Device — prefer CUDA, then Apple MPS, else CPU
+    if torch.cuda.is_available():
+        DEVICE = torch.device("cuda")
+    elif hasattr(torch.backends, "mps") and torch.backends.mps.is_available():
+        DEVICE = torch.device("mps")
+    else:
+        DEVICE = torch.device("cpu")
 
     # Output
     CHECKPOINT_DIR = "./checkpoints"

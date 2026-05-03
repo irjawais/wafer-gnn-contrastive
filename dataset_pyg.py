@@ -93,15 +93,23 @@ def collate_graphs(batch):
     )
 
 
-def make_worker_init_fn(base_seed: int = 0):
-    """Return a worker_init_fn that gives each DataLoader worker a unique RNG."""
+class _WorkerInit:
+    """Picklable worker_init_fn — required for macOS 'spawn' multiprocessing."""
 
-    def _init(worker_id: int):
+    def __init__(self, base_seed: int = 0):
+        self.base_seed = base_seed
+
+    def __call__(self, worker_id: int):
         info = torch.utils.data.get_worker_info()
         if info is None:
             return
         ds = info.dataset
         if isinstance(ds, WaferGraphDataset):
-            ds.rng = np.random.default_rng(base_seed + worker_id + 1000 * os.getpid())
+            ds.rng = np.random.default_rng(
+                self.base_seed + worker_id + 1000 * os.getpid()
+            )
 
-    return _init
+
+def make_worker_init_fn(base_seed: int = 0):
+    """Return a worker_init_fn that gives each DataLoader worker a unique RNG."""
+    return _WorkerInit(base_seed)

@@ -40,16 +40,21 @@ def hu_moments(wafer: np.ndarray) -> np.ndarray:
 
 
 def fourier_descriptors(wafer: np.ndarray, n_descriptors: int = 10) -> np.ndarray:
+    """Always returns a fixed-length vector of `n_descriptors` floats
+    (zero-padded if the contour is shorter than n_descriptors)."""
     bin_img = (wafer == 2).astype(np.uint8)
     contours, _ = cv2.findContours(bin_img, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+    out = np.zeros(n_descriptors, dtype=np.float32)
     if not contours:
-        return np.zeros(n_descriptors, dtype=np.float32)
+        return out
     contour = max(contours, key=cv2.contourArea).squeeze()
     if contour.ndim < 2 or len(contour) < 2:
-        return np.zeros(n_descriptors, dtype=np.float32)
+        return out
     complex_pts = contour[:, 0] + 1j * contour[:, 1]
     fft = np.fft.fft(complex_pts)
-    return np.abs(fft[:n_descriptors]).astype(np.float32)
+    mag = np.abs(fft[:n_descriptors]).astype(np.float32)
+    out[: len(mag)] = mag
+    return out
 
 
 def structural_similarity(w1: np.ndarray, w2: np.ndarray) -> float:

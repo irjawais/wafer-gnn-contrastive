@@ -109,12 +109,12 @@ def train_self_supervised(
     worker_init = make_worker_init_fn(cfg.SEED)
     train_loader = DataLoader(
         train_set, batch_size=cfg.BATCH_SIZE, sampler=sampler,
-        collate_fn=collate_graphs, num_workers=2, drop_last=True,
+        collate_fn=collate_graphs, num_workers=0, drop_last=True,
         worker_init_fn=worker_init,
     )
     val_loader = DataLoader(
         val_set, batch_size=cfg.BATCH_SIZE, shuffle=False,
-        collate_fn=collate_graphs, num_workers=2,
+        collate_fn=collate_graphs, num_workers=0,
         worker_init_fn=worker_init,
     )
 
@@ -169,11 +169,11 @@ def fine_tune_classifier(
     worker_init = make_worker_init_fn(cfg.SEED)
     train_loader = DataLoader(
         train_set, batch_size=cfg.BATCH_SIZE, shuffle=True,
-        collate_fn=collate_graphs, num_workers=2, worker_init_fn=worker_init,
+        collate_fn=collate_graphs, num_workers=0, worker_init_fn=worker_init,
     )
     val_loader = DataLoader(
         val_set, batch_size=cfg.BATCH_SIZE, shuffle=False,
-        collate_fn=collate_graphs, num_workers=2, worker_init_fn=worker_init,
+        collate_fn=collate_graphs, num_workers=0, worker_init_fn=worker_init,
     )
 
     model = GINJumpingKnowledge().to(cfg.DEVICE)
