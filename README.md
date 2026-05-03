@@ -191,7 +191,7 @@ Defect classes (9): None, Center, Donut, Edge-Loc, Edge-Ring, Local, Near-full, 
 
 ---
 
-## Reproducibility Checklist
+## What's Included
 
 - [x] Fixed random seed in `config.py` (default: 42)
 - [x] Deterministic seeding propagated through `main.py`, `train.py`, and `evaluate.py`
