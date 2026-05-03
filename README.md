@@ -1,8 +1,6 @@
 # Graph-Based Contrastive Learning for Self-Supervised Wafer Defect Detection
 
-Official implementation of the methodology described in:
-
-> Awais, M., Postolache, O. A., Oliveira, S. M. (2026). Graph-Based Contrastive Learning for Self-Supervised Semiconductor Wafer Defect Detection. *Journal of Intelligent Manufacturing* (under revision).
+Implementation of a self-supervised approach combining Graph Neural Networks with multi-criteria contrastive learning for semiconductor wafer defect detection on the WM-811K dataset.
 
 ---
 
@@ -106,17 +104,3 @@ All hyperparameters live in `config.py`.
 | Patience | 20 |
 | Min-defective fraction per batch | 0.30 |
 | Random seed | 42 |
-
----
-
-## Citation
-
-```bibtex
-@article{awais2026wafer,
-  title={Graph-Based Contrastive Learning for Self-Supervised Semiconductor Wafer Defect Detection},
-  author={Awais, Muhammad and Postolache, Octavian Adrian and Oliveira, Sancho Moura},
-  journal={Journal of Intelligent Manufacturing},
-  year={2026},
-  note={Under revision}
-}
-```
