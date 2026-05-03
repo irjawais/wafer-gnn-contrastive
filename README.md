@@ -29,7 +29,7 @@ Official implementation of the methodology described in:
 ## Installation
 
 ```bash
-git clone https://github.com/<username>/wafer-gnn-contrastive.git
+git clone https://github.com/irjawais/wafer-gnn-contrastive.git
 cd wafer-gnn-contrastive
 pip install -r requirements.txt
 ```
